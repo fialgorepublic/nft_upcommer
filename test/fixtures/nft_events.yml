@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyText
+  blockchaain: 1
+  collection_count: 1
+  trait_count: 1
+  sale_price: 1.5
+  pre_sale_price: 1.5
+  pre_sale_date: 2022-08-17
+  public_sale_date: 2022-08-17
+  tags: 1
+  official_links: MyString
+
+two:
+  name: MyString
+  description: MyText
+  blockchaain: 1
+  collection_count: 1
+  trait_count: 1
+  sale_price: 1.5
+  pre_sale_price: 1.5
+  pre_sale_date: 2022-08-17
+  public_sale_date: 2022-08-17
+  tags: 1
+  official_links: MyString
