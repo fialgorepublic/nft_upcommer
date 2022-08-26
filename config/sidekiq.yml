@@ -1,0 +1,4 @@
+get_social_followers:
+  cron: "0 * * * *"
+  class: "GetSocialFollowers"
+  queue: default

@@ -13,6 +13,10 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'devise'
 gem 'activeadmin'
 gem 'rack-cors'
+gem 'sidekiq', '>= 6.4.1'
+gem 'sidekiq-cron'
+gem 'redis'
+gem 'selenium-webdriver', '>= 4.0.0.rc1'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
@@ -28,7 +32,6 @@ end
 
 group :test do
   gem 'capybara', '>= 3.26'
-  gem 'selenium-webdriver', '>= 4.0.0.rc1'
   gem 'webdrivers'
 end
 

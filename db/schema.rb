@@ -81,6 +81,9 @@ ActiveRecord::Schema.define(version: 2022_08_22_121539) do
     t.date "public_sale_date"
     t.text "tags", default: [], array: true
     t.string "twitter_link"
+    t.integer "twitter_follower_count"
+    t.integer "discord_follower_count"
+    t.integer "marketplace_follower_count"
     t.string "discord_link"
     t.string "website_link"
     t.string "market_place_link"

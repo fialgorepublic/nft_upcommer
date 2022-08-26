@@ -10,6 +10,7 @@ class Api::V1::NftEventsController < Api::BaseController
     nft_event = NftEvent.new(nft_events_params)
     if nft_event.save
       json_success_response('NFT Event Created Successfully', get_nft_event(nft_event))
+      GetSocialFollowers.perform_async(nft_event.id)
     else
       json_error_response('There are some issues', nft_event.errors)
     end

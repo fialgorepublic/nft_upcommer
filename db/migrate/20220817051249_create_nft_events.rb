@@ -12,6 +12,10 @@ class CreateNftEvents < ActiveRecord::Migration[6.1]
       t.date :public_sale_date
       t.text :tags, array: true, default: []
       t.string :twitter_link
+      t.integer :twitter_follower_count
+      t.integer :discord_follower_count
+      t.integer :marketplace_follower_count
+
       t.string :discord_link
       t.string :website_link
       t.string :market_place_link
