@@ -17,7 +17,7 @@ class GetSocialFollowers
   end
 
   def get_event_date(event)
-    options = Selenium::WebDriver::Firefox::Options.new
+    options = Selenium::WebDriver::Firefox::Options.new(args: ['-headless'])
     driver = Selenium::WebDriver.for(:firefox, options: options)
     begin
     driver.get(event.twitter_link)
