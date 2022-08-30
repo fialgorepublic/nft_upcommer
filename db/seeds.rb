@@ -4,31 +4,31 @@ plan_data = [
                 "Standard review listing up to 48 hours",
                 "Standard support queue 9am - 6pm CET",
                 "Only 1 out of 10 projects pass through moderation due to high demand",
-              ], image: File.open("#{Rails.root}/app/assets/images/Free-Plan.svg")},
+              ], image: File.open("#{Rails.root}/app/assets/images/Free-Plan.png")},
               { name: 'HomePage Plan', day_price: 12.3, week_price: 23.7, description_list: [
                 "Best visibility possible, position on top of the homepage",
                 "Express listing - less than 2 hours",
                 "Premium support queue available 24/7",
                 "Guaranteed publication",
-              ], image: File.open("#{Rails.root}/app/assets/images/Homapage-Plan.svg")  },
+              ], image: File.open("#{Rails.root}/app/assets/images/Homapage-Plan.png")  },
               { name: 'Blue Chip Project Plan', day_price: 11.1, week_price: 32.3, description_list: [
                 "Premium listing, position on every page",
                 "Express listing - less than 2 hours",
                 "Premium support queue available 24/7",
                 "Guaranteed publication",
-              ], image: File.open("#{Rails.root}/app/assets/images/BlueChip-Plan.svg") },
+              ], image: File.open("#{Rails.root}/app/assets/images/BlueChip-Plan.png") },
               { name: 'Featured Nft Drops', day_price: 31.5, week_price: 43.8, description_list: [
                 "Featured listing, highlighted position",
                 "Express listing - less than 2 hours",
                 "Premium support queue available 24/7",
                 "Guaranteed publication",
-              ], image: File.open("#{Rails.root}/app/assets/images/BestOption-Plan.svg") },
+              ], image: File.open("#{Rails.root}/app/assets/images/BestOption-Plan.png") },
               { name: 'SIDEBAR NFT PLAN', day_price: 52.7, week_price: 74.9, description_list: [
                 "Sidebar listing, side position",
                 "Express listing - less than 2 hours",
                 "Premium support queue available 24/7",
                 "Guaranteed publication",
-              ], image: File.open("#{Rails.root}/app/assets/images/Sidebar-NFT-Plan-Image.svg") }
+              ], image: File.open("#{Rails.root}/app/assets/images/Sidebar-Plan.png") }
             ]
 plan_data.each do |plan|
   create_plan = Plan.find_or_create_by(
