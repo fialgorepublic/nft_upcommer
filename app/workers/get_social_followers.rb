@@ -7,7 +7,7 @@ class GetSocialFollowers
   def perform(event_id)
   	event = NftEvent.find(event_id.to_i)
   	if event.present?
-  		get_event_data(event)
+  		get_event_date(event)
   	else
   		NftEvent.find_each  do |nft_event|
   			get_event_date(nft_event)
