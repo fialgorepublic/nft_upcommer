@@ -17,6 +17,6 @@ class Api::V1::PlansController < Api::BaseController
     end
 
     def get_plan_image(plan)
-      plan.attributes.merge(image: plan.image.attached? ? plan.image.service_url : nil)
+      plan.attributes.merge(Image: plan.image.attached? ? plan.image.service_url : nil)
     end
 end
