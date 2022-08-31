@@ -2,7 +2,20 @@ class Api::V1::NftEventsController < Api::BaseController
   before_action :find_nft_event, only: %i[show]
 
   def index
-    nft_events = NftEvent.all
+    nft_events = \
+    if params[:featured]
+      Plan.featured.first.nft_events
+    elsif params[:bluechip]
+      Plan.bluechip.first.nft_events
+    elsif params[:upcoming]
+      NftEvent.where("public_sale_date > ?", Date.today)
+    elsif params[:today]
+      NftEvent.where("public_sale_date = ?", Date.today)
+    elsif params[:ongoing]
+      NftEvent.where("public_sale_date < ?", Date.today)
+      else
+        NftEvent.all
+    end
     json_success_response("All NFT Events", nft_events.collect{|nft_event| get_nft_event(nft_event)})
   end
 
@@ -18,6 +31,23 @@ class Api::V1::NftEventsController < Api::BaseController
 
   def show
     json_success_response("NFT Event Detail", get_nft_event(@nft_event))
+  end
+
+  def slider_nft
+    nft_events = NftEvent.order(id: :desc).limit(6)
+    json_success_response("All NFT Events", nft_events.collect{|nft_event| get_nft_event(nft_event)})
+  end
+
+  def search_nft
+    nft_events = \
+    if params[:featured] == "true"
+      Plan.featured.first.nft_events.where("name ILIKE ? OR description ILIKE ? ", "#{params[:title]}%", "#{params[:title]}%").order("#{params[:sort]} #{params[:order]}")
+    elsif params[:featured] == "false" || params[:feature].nil?
+      NftEvent.where("name ILIKE ? OR description ILIKE ? ", "#{params[:title]}%", "#{params[:title]}%").order("#{params[:sort]} #{params[:order]}")
+    else
+      NftEvent.all
+    end
+    json_success_response("All NFT Events", nft_events.collect{|nft_event| get_nft_event(nft_event)})
   end
 
   private

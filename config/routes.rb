@@ -6,7 +6,12 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   namespace :api do
     namespace :v1 do
-      resources :nft_events, only: %i[create index show]
+      resources :nft_events, only: %i[create index show] do
+        collection do
+          get :slider_nft
+          post :search_nft
+        end
+      end
       resources :plans, only: %i[index show]
     end
   end
