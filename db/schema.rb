@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 2022_08_22_121539) do
   create_table "plans", force: :cascade do |t|
     t.string "name"
     t.text "description_list", default: [], array: true
+    t.integer "plan_type"
     t.float "day_price"
     t.float "week_price"
     t.datetime "created_at", precision: 6, null: false
