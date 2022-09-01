@@ -4,23 +4,24 @@ class Api::V1::NftEventsController < Api::BaseController
   def index
     nft_events = \
     if params[:featured]
-      Plan.featured.first.nft_events.where(accepted: true)
+      Plan.featured.first.nft_events.where(approved: true)
     elsif params[:bluechip]
-      Plan.bluechip.first.nft_events.where(accepted: true)
+      Plan.bluechip.first.nft_events.where(approved: true)
     elsif params[:upcoming]
-      NftEvent.where("public_sale_date > ? AND accepted = ?", Date.today, true)
+      NftEvent.where("public_sale_date > ? AND approved = ?", Date.today, true)
     elsif params[:today]
-      NftEvent.where("public_sale_date = ? AND accepted = ?", Date.today, true)
+      NftEvent.where("public_sale_date = ? AND approved = ?", Date.today, true)
     elsif params[:ongoing]
-      NftEvent.where("public_sale_date < ? AND accepted = ?", Date.today, true)
+      NftEvent.where("public_sale_date < ? AND approved = ?", Date.today, true)
       else
-        NftEvent.all.where(accepted: true)
+        NftEvent.where(approved: true)
     end
     json_success_response("All NFT Events", nft_events.collect{|nft_event| get_nft_event(nft_event)})
   end
 
   def create
     nft_event = NftEvent.new(nft_events_params)
+    nft_event.plan_id = Plan.free.first
     if nft_event.save
       json_success_response('NFT Event Created Successfully', get_nft_event(nft_event))
       GetSocialFollowers.perform_async(nft_event.id)
@@ -34,7 +35,7 @@ class Api::V1::NftEventsController < Api::BaseController
   end
 
   def slider_nft
-    nft_events = NftEvent.where(accepted: true).order(id: :desc).limit(6)
+    nft_events = NftEvent.where(approved: true).order(id: :desc).limit(6)
     json_success_response("All NFT Events", nft_events.collect{|nft_event| get_nft_event(nft_event)})
   end
 
