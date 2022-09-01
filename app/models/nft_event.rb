@@ -4,4 +4,6 @@ class NftEvent < ApplicationRecord
 
   belongs_to :plan, optional: true
   has_one_attached :avatar
+
+  scope :approved, -> { where( approved: true ) }
 end

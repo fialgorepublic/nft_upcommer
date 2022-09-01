@@ -4,17 +4,17 @@ class Api::V1::NftEventsController < Api::BaseController
   def index
     nft_events = \
     if params[:featured]
-      Plan.featured.first.nft_events.where(approved: true)
+      NftEvent.approved.where(plan: Plan.featured)
     elsif params[:bluechip]
-      Plan.bluechip.first.nft_events.where(approved: true)
+      NftEvent.approved.approved.where(plan: Plan.bluechip)
     elsif params[:upcoming]
-      NftEvent.where("public_sale_date > ? AND approved = ?", Date.today, true)
+      NftEvent.approved.where("public_sale_date > ?", Date.today)
     elsif params[:today]
-      NftEvent.where("public_sale_date = ? AND approved = ?", Date.today, true)
+      NftEvent.approved.where("public_sale_date = ?", Date.today)
     elsif params[:ongoing]
-      NftEvent.where("public_sale_date < ? AND approved = ?", Date.today, true)
+      NftEvent.approved.where("public_sale_date < ?", Date.today)
       else
-        NftEvent.where(approved: true)
+        NftEvent.approved
     end
     json_success_response("All NFT Events", nft_events.collect{|nft_event| get_nft_event(nft_event)})
   end
@@ -44,9 +44,9 @@ class Api::V1::NftEventsController < Api::BaseController
     order = "#{params[:sort]} #{params[:order]}" if params[:sort].present? && params[:order].present?
     nft_events = \
     if params[:featured] == "true"
-      Plan.featured.first.nft_events.where("name ILIKE ? OR description ILIKE ?", "#{params[:title]}%", "#{params[:title]}%").order(order)
+      Plan.featured.first.nft_events.where("name ILIKE ? OR description ILIKE ? AND approved = ?", "#{params[:title]}%", "#{params[:title]}%", true).order(order)
     elsif params[:featured] == "false" || params[:feature].nil?
-      NftEvent.where("name ILIKE ? OR description ILIKE ? ", "#{params[:title]}%", "#{params[:title]}%").order(order)
+      NftEvent.where("name ILIKE ? OR description ILIKE ? AND approved = ?", "#{params[:title]}%", "#{params[:title]}%", true).order(order)
     else
       NftEvent.all
     end
