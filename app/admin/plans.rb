@@ -5,7 +5,7 @@ ActiveAdmin.register Plan do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :name, :day_price, :week_price
+  permit_params :name, :description_list, :plan_type, :day_price, :week_price
   #
   # or
   #

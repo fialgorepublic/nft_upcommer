@@ -4,17 +4,17 @@ class Api::V1::NftEventsController < Api::BaseController
   def index
     nft_events = \
     if params[:featured]
-      Plan.featured.first.nft_events
+      Plan.featured.first.nft_events.where(accepted: true)
     elsif params[:bluechip]
-      Plan.bluechip.first.nft_events
+      Plan.bluechip.first.nft_events.where(accepted: true)
     elsif params[:upcoming]
-      NftEvent.where("public_sale_date > ?", Date.today)
+      NftEvent.where("public_sale_date > ? AND accepted = ?", Date.today, true)
     elsif params[:today]
-      NftEvent.where("public_sale_date = ?", Date.today)
+      NftEvent.where("public_sale_date = ? AND accepted = ?", Date.today, true)
     elsif params[:ongoing]
-      NftEvent.where("public_sale_date < ?", Date.today)
+      NftEvent.where("public_sale_date < ? AND accepted = ?", Date.today, true)
       else
-        NftEvent.all
+        NftEvent.all.where(accepted: true)
     end
     json_success_response("All NFT Events", nft_events.collect{|nft_event| get_nft_event(nft_event)})
   end
@@ -34,16 +34,18 @@ class Api::V1::NftEventsController < Api::BaseController
   end
 
   def slider_nft
-    nft_events = NftEvent.order(id: :desc).limit(6)
+    nft_events = NftEvent.where(accepted: true).order(id: :desc).limit(6)
     json_success_response("All NFT Events", nft_events.collect{|nft_event| get_nft_event(nft_event)})
   end
 
   def search_nft
+
+    order = "#{params[:sort]} #{params[:order]}" if params[:sort].present? && params[:order].present?
     nft_events = \
     if params[:featured] == "true"
-      Plan.featured.first.nft_events.where("name ILIKE ? OR description ILIKE ? ", "#{params[:title]}%", "#{params[:title]}%").order("#{params[:sort]} #{params[:order]}")
+      Plan.featured.first.nft_events.where("name ILIKE ? OR description ILIKE ?", "#{params[:title]}%", "#{params[:title]}%").order(order)
     elsif params[:featured] == "false" || params[:feature].nil?
-      NftEvent.where("name ILIKE ? OR description ILIKE ? ", "#{params[:title]}%", "#{params[:title]}%").order("#{params[:sort]} #{params[:order]}")
+      NftEvent.where("name ILIKE ? OR description ILIKE ? ", "#{params[:title]}%", "#{params[:title]}%").order(order)
     else
       NftEvent.all
     end
