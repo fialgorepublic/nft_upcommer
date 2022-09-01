@@ -11,6 +11,7 @@ Rails.application.routes.draw do
           get :slider_nft
           post :search_nft
         end
+        put :update_plan, on: :member
       end
       resources :plans, only: %i[index show]
     end

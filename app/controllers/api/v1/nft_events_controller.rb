@@ -1,5 +1,5 @@
 class Api::V1::NftEventsController < Api::BaseController
-  before_action :find_nft_event, only: %i[show]
+  before_action :find_nft_event, only: %i[show update_plan]
 
   def index
     nft_events = \
@@ -48,6 +48,16 @@ class Api::V1::NftEventsController < Api::BaseController
       NftEvent.all
     end
     json_success_response("All NFT Events", nft_events.collect{|nft_event| get_nft_event(nft_event)})
+  end
+
+  def update_plan
+    if params[:plan_id].present?
+      if @nft_event.update(plan_id: params[:plan_id])
+        json_success_response("Plan added ", get_nft_event(@nft_event))
+      else
+          json_error_response('There are some issues', @nft_event.errors)
+      end
+    end
   end
 
   private
