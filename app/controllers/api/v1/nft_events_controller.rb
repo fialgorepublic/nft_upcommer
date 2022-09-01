@@ -66,7 +66,7 @@ class Api::V1::NftEventsController < Api::BaseController
   private
 
     def nft_events_params
-      params.permit(:name, :description, :blockchain, :collection_count, :trait_count, :sale_price, :pre_sale_price, :pre_sale_date, :public_sale_date, :official_links, :avatar, :twitter_link, :discord_link, :website_link, :market_place_link, :plan_id, tags: [])
+      params.permit(:name, :description, :blockchain, :collection_count, :trait_count, :sale_price, :pre_sale_price, :pre_sale_date, :public_sale_date, :official_links, :avatar, :twitter_link, :discord_link, :email, :specific_request, :website_link, :market_place_link, :plan_id, tags: [])
     end
 
     def find_nft_event
