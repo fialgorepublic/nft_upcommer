@@ -48,8 +48,10 @@ class Api::V1::NftEventsController < Api::BaseController
       Plan.featured.first.nft_events.approved.where("name ILIKE ? OR description ILIKE ?", "#{params[:title]}%", "#{params[:title]}%").order(order).page(params[:page]).per(10)
     elsif params[:featured] == "false" || params[:feature].nil?
       NftEvent.approved.where("name ILIKE ? OR description ILIKE ?", "#{params[:title]}%", "#{params[:title]}%").order(order).page(params[:page]).per(10)
+  
+    end
   end
-
+  
   def update_plan
     if params[:plan_id].present?
       if @nft_event.update(plan_id: params[:plan_id])
