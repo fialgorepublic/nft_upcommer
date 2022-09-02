@@ -1,27 +1,22 @@
-ActiveAdmin.register NftEvent do
-
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # Uncomment all parameters which should be permitted for assignment
-  #
-   permit_params :name, :description, :blockchain, :collection_count, :trait_count, :sale_price, :pre_sale_price, :pre_sale_date, :public_sale_date, :twitter_link, :discord_link, :website_link, :market_place_link, :email, :specific_request, :plan_id, :approved, :twitter_follower_count, :discord_follower_count, :marketplace_follower_count, :email, :specific_request
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:name, :description, :blockchain, :collection_count, :trait_count, :sale_price, :pre_sale_price, :pre_sale_date, :public_sale_date, :tags, :twitter_link, :discord_link, :website_link, :market_place_link, :email, :specific_request, :plan_id]
-  #   permitted << :other if params[:action] == 'create' && current_user.admin?
-  #   permitted
-  # end
-  
-end
-
+include ApplicationHelper
 
 ActiveAdmin.register NftEvent do
+  permit_params :name, :description, :blockchain, :collection_count, :trait_count, :sale_price, :pre_sale_price, :pre_sale_date, :public_sale_date, :twitter_link, :discord_link, :website_link, :market_place_link, :email, :specific_request, :plan_id, :approved, :twitter_follower_count, :discord_follower_count, :marketplace_follower_count, :email, :specific_request
+
+  member_action :toggle_accept, method: :post, only: :index do
+    nft_event = NftEvent.find(params[:nft_id])
+    if nft_event.present?
+      nft_event.update(approved: params[:approved])
+      redirect_to admin_nft_events_path, notice: params[:approved] == "true" ? "Nft Event Approved" : "Nft Event Not Approved"
+    end
+  end
+
+
   index do
     column :name
-    column :description
+    column 'Description' do |nft|
+      nft.description.truncate(30)
+    end
     column :blockchain
     column :collection_count
     column :trait_count
@@ -40,8 +35,12 @@ ActiveAdmin.register NftEvent do
     column :marketplace_follower_count
     column :email
     column :specific_request
+    column :approved
     column :plan
     column :created_at
+    column 'Approve Action' do |nft|
+      link_to("Approve", toggle_accept_admin_nft_event_path(nft, nft_id: nft.id, approved: true), method: :post) + " | " + link_to("Disapprove", toggle_accept_admin_nft_event_path(nft, nft_id: nft.id, approved: false), method: :post)
+    end
     actions
   end
 
@@ -67,6 +66,7 @@ ActiveAdmin.register NftEvent do
       row :marketplace_follower_count
       row :email
       row :specific_request
+      row :approved
       row :plan
       row :created_at
     end
