@@ -14,7 +14,7 @@ class Api::V1::NftEventsController < Api::BaseController
     elsif params[:today]
       NftEvent.approved.where("public_sale_date = ?", Date.today).page(params[:page]).per(10)
     elsif params[:ongoing]
-      NftEvent.approved.where("public_sale_date < ?", Date.today)..page(params[:page]).per(10)
+      NftEvent.approved.where("public_sale_date < ?", Date.today).page(params[:page]).per(10)
       else
         NftEvent.approved.page(params[:page]).per(10)
     end
@@ -51,7 +51,7 @@ class Api::V1::NftEventsController < Api::BaseController
   
     end
   end
-  
+
   def update_plan
     if params[:plan_id].present?
       if @nft_event.update(plan_id: params[:plan_id])
