@@ -22,7 +22,7 @@ class GetSocialFollowers
     begin
     driver.get(event.twitter_link)
     sleep(5)
-    twitter_follower_count = driver.find_elements(:xpath, "//span[@class='css-901oao css-16my406 r-poiln3 r-bcqeeo r-qvutc0']")[27].text
+    twitter_follower_count = driver.find_elements(:xpath, "//a[@class='css-4rbku5 css-18t94o4 css-901oao r-18jsvk2 r-1loqt21 r-37j5jr r-a023e6 r-16dba41 r-rjixqe r-bcqeeo r-qvutc0']")[1].text.split(" ").first
     event.update(twitter_follower_count: twitter_follower_count.gsub(",", ""))
     rescue => e
         puts "Twitter error message #{e.message}"
