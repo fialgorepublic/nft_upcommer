@@ -17,6 +17,7 @@ gem 'sidekiq', '>= 6.4.1'
 gem 'sidekiq-cron'
 gem "redis", "4.7.1"
 gem 'selenium-webdriver', '>= 4.0.0.rc1'
+gem 'kaminari'
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end

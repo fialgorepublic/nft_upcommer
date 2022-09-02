@@ -296,6 +296,7 @@ DEPENDENCIES
   capybara (>= 3.26)
   devise
   jbuilder (~> 2.7)
+  kaminari
   listen (~> 3.3)
   pg
   pry
