@@ -1,7 +1,7 @@
 include ApplicationHelper
 
 ActiveAdmin.register NftEvent do
-  permit_params :name, :description, :blockchain, :collection_count, :trait_count, :sale_price, :pre_sale_price, :pre_sale_date, :public_sale_date, :twitter_link, :discord_link, :website_link, :market_place_link, :email, :specific_request, :plan_id, :approved, :twitter_follower_count, :discord_follower_count, :marketplace_follower_count, :email, :specific_request
+  permit_params :name, :description, :blockchain, :collection_count, :trait_count, :sale_price, :pre_sale_price, :pre_sale_date, :public_sale_date, :twitter_link, :discord_link, :website_link, :market_place_link, :email, :specific_request, :plan_id, :approved, :twitter_follower_count, :discord_follower_count, :marketplace_follower_count, :avatar
 
   member_action :toggle_accept, method: :post, only: :index do
     nft_event = NftEvent.find(params[:nft_id])
@@ -49,6 +49,9 @@ ActiveAdmin.register NftEvent do
       row :name
       row :description
       row :blockchain
+      row "Image" do |nft|
+        link_to image_tag(url_for(nft.avatar), height: '200px'), url_for(nft.avatar), target: :_blank
+      end
       row :collection_count
       row :trait_count
       row :sale_price
@@ -69,6 +72,33 @@ ActiveAdmin.register NftEvent do
       row :approved
       row :plan
       row :created_at
+    end
+  end
+
+  form do |f|
+    f.inputs do
+      f.input :name
+      f.input :description
+      f.input :blockchain
+      f.input :plan
+      f.input :collection_count
+      f.input :trait_count
+      f.input :sale_price
+      f.input :pre_sale_price
+      f.input :pre_sale_date
+      f.input :public_sale_date
+      f.input :twitter_link
+      f.input :discord_link
+      f.input :website_link
+      f.input :market_place_link
+      f.input :avatar, as: :file
+      f.input :email
+      f.input :specific_request
+      f.input :twitter_follower_count
+      f.input :discord_follower_count
+      f.input :marketplace_follower_count
+      f.input :approved
+      f.actions
     end
   end
 end
