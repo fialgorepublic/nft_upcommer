@@ -40,6 +40,8 @@ ActiveAdmin.register NftEvent do
     column :marketplace_follower_count
     column :email
     column :specific_request
+    column :plan
+    column :created_at
     actions
   end
 
@@ -65,7 +67,8 @@ ActiveAdmin.register NftEvent do
       row :marketplace_follower_count
       row :email
       row :specific_request
-  
+      row :plan
+      row :created_at
     end
   end
 end
