@@ -6,4 +6,5 @@ class NftEvent < ApplicationRecord
   has_one_attached :avatar
 
   scope :approved, -> { where( approved: true ) }
+  scope :all_plan_event, -> { approved.where(plan: Plan.not_free)}
 end
