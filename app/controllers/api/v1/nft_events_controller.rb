@@ -37,7 +37,7 @@ class Api::V1::NftEventsController < Api::BaseController
   end
 
   def slider_nft
-    nft_events = NftEvent.where(approved: true).order(id: :desc).limit(6)
+    nft_events = NftEvent.approved.order(id: :desc).limit(6)
     json_success_response("All NFT Events", nft_events.collect{|nft_event| get_nft_event(nft_event)})
   end
 
