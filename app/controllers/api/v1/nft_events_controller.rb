@@ -8,13 +8,13 @@ class Api::V1::NftEventsController < Api::BaseController
     elsif params[:bluechip]
       NftEvent.approved.where(plan: Plan.bluechip).page(params[:page]).per(10)
     elsif params[:upcoming]
-      NftEvent.approved.where("public_sale_date > ?", Date.today).page(params[:page]).per(10)
+      NftEvent.approved.where("public_sale_date > ?", Time.zone.today).page(params[:page]).per(10)
     elsif params[:sidebar]
       NftEvent.approved.approved.where(plan: Plan.sidebar).page(params[:page]).per(10)
     elsif params[:today]
-      NftEvent.approved.where("public_sale_date = ?", Date.today).page(params[:page]).per(10)
+      NftEvent.approved.where("public_sale_date = ?", Time.zone.today).page(params[:page]).per(10)
     elsif params[:ongoing]
-      NftEvent.approved.where("public_sale_date < ?", Date.today).page(params[:page]).per(10)
+      NftEvent.approved.where("public_sale_date < ?", Time.zone.today).page(params[:page]).per(10)
       else
         NftEvent.approved.page(params[:page]).per(10)
     end

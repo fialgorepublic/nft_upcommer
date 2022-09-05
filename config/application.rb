@@ -15,6 +15,8 @@ module NftUpcommer
       g.helper false
       g.template_engine false
     end
+    config.time_zone = 'London'
+
     config.active_job.queue_adapter = :sidekiq
     # Configuration for the application, engines, and railties goes here.
     #
