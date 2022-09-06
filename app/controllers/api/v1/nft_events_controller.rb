@@ -37,7 +37,7 @@ class Api::V1::NftEventsController < Api::BaseController
   end
 
   def slider_nft
-    nft_events = NftEvent.approved.order(id: :desc).limit(6)
+    nft_events = Plan.home.first.nft_events.approved.order(id: :desc).limit(6)
     json_success_response("All NFT Events", nft_events.collect{|nft_event| get_nft_event(nft_event)})
   end
 
@@ -62,6 +62,18 @@ class Api::V1::NftEventsController < Api::BaseController
           json_error_response('There are some issues', @nft_event.errors)
       end
     end
+  end
+
+  def get_bluechip_nft
+    nft_events = \
+    if params[:upcoming]
+      Plan.bluechip.first.nft_events.approved.where("public_sale_date > ?", Time.zone.today)
+    elsif params[:today]
+      Plan.bluechip.first.nft_events.approved.where("public_sale_date = ? OR pre_sale_date = ?", Time.zone.today, Time.zone.today)
+    elsif params[:ongoing]
+      Plan.bluechip.first.nft_events.approved.where(public_sale_date: Time.zone.yesterday..Time.zone.today).page(params[:page]).per(10)
+    end
+    json_success_response("All NFT Events", nft_events.collect{|nft_event| get_nft_event(nft_event)})
   end
 
   private

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         collection do
           get :slider_nft
           post :search_nft
+          get :get_bluechip_nft
         end
         put :update_plan, on: :member
       end
