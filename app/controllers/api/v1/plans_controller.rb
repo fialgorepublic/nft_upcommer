@@ -2,7 +2,7 @@ class Api::V1::PlansController < Api::BaseController
   before_action :find_plan, only: %i[show]
 
   def index
-    plans = Plan.all
+    plans = Plan.all.order(id: :asc)
     json_success_response('All Plans', plans.collect{|plan| get_plan_image(plan)})
   end
 
