@@ -8,4 +8,11 @@ class NftEvent < ApplicationRecord
   scope :approved, -> { where( approved: true ) }
   scope :all_plan_event, -> { approved.where(plan: Plan.not_free)}
   scope :without_feature_plan, -> {approved.where(plan: Plan.not_featured)}
+  after_validation :set_slug, only: [:create, :update]
+
+  private
+
+  def set_slug
+    self.slug = name.to_s.parameterize
+    end 
 end

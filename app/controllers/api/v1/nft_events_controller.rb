@@ -83,7 +83,7 @@ class Api::V1::NftEventsController < Api::BaseController
     end
 
     def find_nft_event
-      @nft_event = NftEvent.find params[:id]
+      @nft_event = NftEvent.find_by(slug: params[:id])
     end
 
     def get_nft_event(nft_event)
