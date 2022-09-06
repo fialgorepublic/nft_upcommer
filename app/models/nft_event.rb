@@ -7,4 +7,5 @@ class NftEvent < ApplicationRecord
 
   scope :approved, -> { where( approved: true ) }
   scope :all_plan_event, -> { approved.where(plan: Plan.not_free)}
+  scope :without_feature_plan, -> {approved.where(plan: Plan.not_featured)}
 end
