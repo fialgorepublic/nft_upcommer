@@ -42,7 +42,7 @@ class Api::V1::NftEventsController < Api::BaseController
   end
 
   def search_nft
-    order = "#{params[:sort]} #{params[:order]}" if params[:sort].present? && params[:order].present?
+    order = "#{params[:sort]} #{params[:order]} NULLS LAST" if params[:sort].present? && params[:order].present?
     nft_events = \
     if params[:featured] == "true"
       NftEvent.all_plan_event.where("name ILIKE ? OR description ILIKE ?", "#{params[:title]}%", "#{params[:title]}%").order(order).page(params[:page]).per(10)
