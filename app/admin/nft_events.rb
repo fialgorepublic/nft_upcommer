@@ -1,7 +1,7 @@
 include ApplicationHelper
 
 ActiveAdmin.register NftEvent do
-  permit_params :name, :description, :blockchain, :collection_count, :trait_count, :sale_price, :pre_sale_price, :pre_sale_date, :public_sale_date, :twitter_link, :discord_link, :website_link, :market_place_link, :email, :specific_request, :plan_id, :approved, :twitter_follower_count, :discord_follower_count, :marketplace_follower_count, :avatar
+  permit_params :name, :description, :blockchain, :collection_count, :trait_count, :sale_price, :pre_sale_price, :pre_sale_date, :public_sale_date, :twitter_link, :discord_link, :website_link, :market_place_link, :email, :specific_request, :plan_id, :approved, :twitter_follower_count, :discord_follower_count, :marketplace_follower_count, :slug, :avatar
 
   member_action :toggle_accept, method: :post, only: :index do
     nft_event = NftEvent.find(params[:nft_id])
@@ -50,7 +50,7 @@ ActiveAdmin.register NftEvent do
       row :description
       row :blockchain
       row "Image" do |nft|
-        link_to image_tag(url_for(nft.avatar), height: '200px'), url_for(nft.avatar), target: :_blank
+        link_to image_tag(url_for(nft.avatar), height: '200px'), url_for(nft.avatar), target: :_blank if nft.avatar.attached?
       end
       row :collection_count
       row :trait_count
