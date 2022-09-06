@@ -12,7 +12,7 @@ class Api::V1::NftEventsController < Api::BaseController
     elsif params[:sidebar]
       NftEvent.approved.approved.where(plan: Plan.sidebar).page(params[:page]).per(10)
     elsif params[:today]
-      NftEvent.approved.where("public_sale_date = ?", Time.zone.today).page(params[:page]).per(10)
+      NftEvent.approved.where("public_sale_date = ? OR pre_sale_date = ?", Time.zone.today, Time.zone.today).page(params[:page]).per(10)
     elsif params[:ongoing]
       NftEvent.approved.where(public_sale_date: Time.zone.yesterday..Time.zone.today).page(params[:page]).per(10)
       else
