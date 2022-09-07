@@ -62,8 +62,6 @@ ActiveAdmin.register NftEvent do
       end
       row :pre_sale_date
       row :public_sale_date
-      row :twitter_link
-      row :discord_link
       row "Twitter Link" do |nft|
         nft.twitter_link == 'undefined' ? '' : nft.twitter_link
       end
