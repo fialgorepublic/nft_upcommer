@@ -64,8 +64,14 @@ ActiveAdmin.register NftEvent do
       row :public_sale_date
       row :twitter_link
       row :discord_link
+      row "Twitter Link" do |nft|
+        nft.twitter_link == 'undefined' ? '' : nft.twitter_link
+      end
+      row "Discord Link" do |nft|
+        nft.discord_link == 'undefined' ? '' : nft.discord_link
+      end
       row "Marketplace" do |nft|
-        nft.market_place_link
+        nft.market_place_link == 'undefined' ? '' : nft.market_place_link
       end
       row  "Website Link" do |nft|
         nft.website_link == 'undefined' ? '' : nft.website_link
