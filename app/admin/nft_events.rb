@@ -58,7 +58,7 @@ ActiveAdmin.register NftEvent do
         nft.sale_price > 0 ? "%.2f"%nft.sale_price : ''
       end
       row "Pre Sale Price" do |nft|
-        nft.pre_sale_price.present? ? "%.2f"%nft.pre_sale_price : ''
+        nft.pre_sale_price > 0 ? "%.2f"%nft.pre_sale_price : ''
       end
       row :pre_sale_date
       row :public_sale_date
