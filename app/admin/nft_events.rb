@@ -54,8 +54,12 @@ ActiveAdmin.register NftEvent do
       end
       row :collection_count
       row :trait_count
-      row :sale_price
-      row :pre_sale_price
+      row "Sale Price" do |nft|
+        nft.sale_price.present? ? "%.2f"%nft.sale_price : ''
+      end
+      row "Pre Sale Price" do |nft|
+        nft.pre_sale_price.present? ? "%.2f"%nft.pre_sale_price : ''
+      end
       row :pre_sale_date
       row :public_sale_date
       row :twitter_link
@@ -63,7 +67,9 @@ ActiveAdmin.register NftEvent do
       row "Marketplace" do |nft|
         nft.market_place_link
       end
-      row :website_link
+      row  "Website Link" do |nft|
+        nft.website_link == 'undefined' ? '' : nft.website_link
+      end
       row :twitter_follower_count
       row :discord_follower_count
       row :marketplace_follower_count
@@ -90,7 +96,7 @@ ActiveAdmin.register NftEvent do
       f.input :twitter_link
       f.input :discord_link
       f.input :website_link
-      f.input :market_place_link
+      f.input :market_place_link, label: 'Marketplace Link'
       f.input :avatar, as: :file
       f.input :email
       f.input :specific_request
