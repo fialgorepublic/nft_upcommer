@@ -1,5 +1,3 @@
-include ApplicationHelper
-
 ActiveAdmin.register NftEvent do
   permit_params :name, :description, :blockchain, :collection_count, :trait_count, :sale_price, :pre_sale_price, :pre_sale_date, :public_sale_date, :twitter_link, :discord_link, :website_link, :market_place_link, :email, :specific_request, :plan_id, :approved, :twitter_follower_count, :discord_follower_count, :marketplace_follower_count, :slug, :avatar
 
@@ -20,16 +18,26 @@ ActiveAdmin.register NftEvent do
     column :blockchain
     column :collection_count
     column :trait_count
-    column :sale_price
-    column :pre_sale_price
+    column "Sale Price" do |nft|
+      nft.sale_price.present? && nft.sale_price > 0 ? "%.2f"%nft.sale_price : ''
+    end
+    column "Pre Sale Price" do |nft|
+      nft.pre_sale_price.present? && nft.pre_sale_price > 0 ? "%.2f"%nft.pre_sale_price : ''
+    end
     column :pre_sale_date
     column :public_sale_date
-    column :twitter_link
-    column :discord_link
-    column "Marketplace" do |nft|
-      nft.market_place_link
+    column "Twitter Link" do |nft|
+      nft.twitter_link == 'undefined' ? '' : nft.twitter_link
     end
-    column :website_link
+    column "Discord Link" do |nft|
+      nft.discord_link == 'undefined' ? '' : nft.discord_link
+    end
+    column "Marketplace Link" do |nft|
+      nft.market_place_link == 'undefined' ? '' : nft.market_place_link
+    end
+    column  "Website Link" do |nft|
+      nft.website_link == 'undefined' ? '' : nft.website_link
+    end
     column :twitter_follower_count
     column :discord_follower_count
     column :marketplace_follower_count
@@ -68,7 +76,7 @@ ActiveAdmin.register NftEvent do
       row "Discord Link" do |nft|
         nft.discord_link == 'undefined' ? '' : nft.discord_link
       end
-      row "Marketplace" do |nft|
+      row "Marketplace Link" do |nft|
         nft.market_place_link == 'undefined' ? '' : nft.market_place_link
       end
       row  "Website Link" do |nft|
