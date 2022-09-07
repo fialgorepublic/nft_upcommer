@@ -55,7 +55,7 @@ ActiveAdmin.register NftEvent do
       row :collection_count
       row :trait_count
       row "Sale Price" do |nft|
-        nft.sale_price.present? ? "%.2f"%nft.sale_price : ''
+        nft.sale_price > 0 ? "%.2f"%nft.sale_price : ''
       end
       row "Pre Sale Price" do |nft|
         nft.pre_sale_price.present? ? "%.2f"%nft.pre_sale_price : ''
