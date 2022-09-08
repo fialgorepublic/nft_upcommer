@@ -45,9 +45,9 @@ class Api::V1::NftEventsController < Api::BaseController
     order = "#{params[:sort]} #{params[:order]} NULLS LAST" if params[:sort].present? && params[:order].present?
     nft_events = \
     if params[:featured] == true
-      NftEvent.all_plan_event.where("name ILIKE ? OR description ILIKE ?", "#{params[:title]}%", "#{params[:title]}%").order(order).page(params[:page]).per(10)
+      NftEvent.all_plan_event.where("name ILIKE ? OR description ILIKE ?", "%#{params[:title]}%", "%#{params[:title]}%").order(order).page(params[:page]).per(10)
     elsif params[:featured] == false || params[:feature].nil?
-      NftEvent.without_feature_plan.where("name ILIKE ? OR description ILIKE ?", "#{params[:title]}%", "#{params[:title]}%").order(order).page(params[:page]).per(10)
+      NftEvent.without_feature_plan.where("name ILIKE ? OR description ILIKE ?", "%#{params[:title]}%", "%#{params[:title]}%").order(order).page(params[:page]).per(10)
     else
       NftEvent.approved
     end
